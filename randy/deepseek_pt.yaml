@@ -1,0 +1,51 @@
+### model
+model_name_or_path: /nas_data/userdata/randy/models/DeepSeek-R1-Distill-Qwen-14B
+# quantization_method: bitsandbytes
+# quantization_bit: 4
+
+### method
+stage: pt
+do_train: true
+finetuning_type: lora
+# use_dora: true
+lora_rank: 64
+lora_alpha: 128
+lora_target: all
+lora_dropout: 0.05
+deepspeed: examples/deepspeed/ds_z2_config.json
+
+### dataset
+dataset: semi-misc,semi-book-paper,cxmt-private,cxmt-dict-semi,cxmt-cptest-videos,cxmt-lms-videos
+template: default
+cutoff_len: 2048
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: /nas_data/userdata/randy/models/cxmt/pt/lora/deepseek-r1-distill-qwen-14b-pt-v5
+overwrite_output_dir: true
+logging_steps: 10
+logging_first_step: true
+save_steps: 100
+save_total_limit: 10
+load_best_model_at_end: true
+plot_loss: true
+report_to: tensorboard
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 4
+warmup_ratio: 0.05
+learning_rate: 1e-4
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+ddp_timeout: 180000000
+bf16: true
+flash_attn: fa2
+enable_liger_kernel: true
+
+### eval
+per_device_eval_batch_size: 1
+eval_strategy: steps
+eval_steps: 100
+val_size: 0.01

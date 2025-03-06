@@ -1,0 +1,38 @@
+#!/bin/bash
+
+deepspeed \
+    --num_gpus 8 \
+    --num_nodes 2 \
+    --hostfile hostfile \
+    --master_addr 10.252.32.12 src/train.py \
+    --deepspeed examples/deepspeed/ds_z2_config.json \
+    --model_name_or_path /nas_data/userdata/zhengwei/cxmt-models/base/cxmt-llama3.1-8b-cpt-v1 \
+    --stage pt \
+    --do_train True \
+    --finetuning_type lora \
+    --dataset cxmt-private,cxmt-lms-videos,cxmt-cptest \
+    --template default \
+    --cutoff_len 2048 \
+    --overwrite_cache True \
+    --num_train_epochs 10.0 \
+    --preprocessing_num_workers 64 \
+    --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 1 \
+    --warmup_ratio 0.1 \
+    --learning_rate 5e-5 \
+    --lr_scheduler_type cosine \
+    --lora_rank 16 \
+    --lora_alpha 32 \
+    --lora_dropout 0.1 \
+    --ddp_timeout 180000000 \
+    --neftune_noise_alpha 5 \
+    --output_dir /nas_data/userdata/randy/models/cxmt/pt/lora/cxmt-llama3.1-8b-cpt-v4 \
+    --overwrite_output_dir True \
+    --logging_steps 10 \
+    --save_steps 500 \
+    --per_device_eval_batch_size 1 \
+    --eval_strategy steps \
+    --eval_steps 500 \
+    --val_size 0.01 \
+    --plot_loss \
+    --bf16
