@@ -1,35 +1,31 @@
 ### model
-model_name_or_path: /nas_data/userdata/randy/models/Qwen2.5-14B-Instruct
-# quantization_method: bitsandbytes
-# quantization_bit: 4
+model: /nas_data/userdata/randy/models/Qwen2.5-14B-Instruct
 
 ### method
 stage: pt
-do_train: true
-finetuning_type: lora
-# use_dora: true
+train_type: lora
+tuner_backend: peft
 lora_rank: 64
 lora_alpha: 128
-lora_target: all
 lora_dropout: 0.05
-deepspeed: examples/deepspeed/ds_z2_config.json
+deepspeed: zero2
 
 ### dataset
+dataset_info: /nas_data/userdata/randy/projects/ms-swift/randy/dataset_info.json
 dataset: semi-misc,semi-book-paper,cxmt-private,cxmt-dict-semi,cxmt-cptest-videos,cxmt-lms-videos
-template: default
-cutoff_len: 2048
-overwrite_cache: true
-preprocessing_num_workers: 16
+packing: true
+max_length: 2048
+enable_cache: true
+dataset_num_proc: 16
+truncation_strategy: delete
 
 ### output
-output_dir: /nas_data/userdata/randy/models/cxmt/pt/lora/qwen2.5-14b-instruct-pt-v5
-overwrite_output_dir: true
+output_dir: /nas_data/userdata/randy/models/cxmt/pt/lora
 logging_steps: 10
 logging_first_step: true
+save_strategy: steps
 save_steps: 100
 save_total_limit: 10
-load_best_model_at_end: true
-plot_loss: true
 report_to: tensorboard
 
 ### train
@@ -39,13 +35,11 @@ warmup_ratio: 0.05
 learning_rate: 1e-4
 num_train_epochs: 3.0
 lr_scheduler_type: cosine
-ddp_timeout: 180000000
-bf16: true
-flash_attn: fa2
-enable_liger_kernel: true
+attn_impl: flash_attn
+use_liger: true
 
 ### eval
 per_device_eval_batch_size: 1
+split_dataset_ratio: 0.01
 eval_strategy: steps
 eval_steps: 100
-val_size: 0.01

@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: /nas_data/userdata/randy/models/cxmt/pt/merge/qwen2.5-14b-instruct-pt-v1.1
+model_name_or_path: /nas_data/userdata/randy/models/cxmt/pt/merge/qwen2.5-14b-instruct-pt-v5.1
 # quantization_method: bitsandbytes
 # quantization_bit: 4
 
@@ -12,19 +12,19 @@ lora_rank: 64
 lora_alpha: 128
 lora_target: all
 lora_dropout: 0.05
-new_special_tokens: <think>,</think>
-additional_target: embed_tokens,lm_head
+# new_special_tokens: <think>,</think>
+# additional_target: embed_tokens,lm_head
 deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
-dataset: fineweb-edu-qa-24k,semi-qa-2.8k,semikong-qa-15k,cxmt-cptest-qa,cxmt-dict-qa,r1-distill-qa-61k
+dataset: fineweb-edu-qa-24k,semi-qa-2.8k,semikong-qa-15k,cxmt-cptest-qa,cxmt-dict-qa
 template: qwen
 cutoff_len: 2048
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /nas_data/userdata/randy/models/cxmt/sft/lora/qwen2.5-14b-instruct-pt-v1.1-sft-v2
+output_dir: /nas_data/userdata/randy/models/cxmt/sft/lora/qwen2.5-14b-instruct-pt-v5.1-sft-v1
 overwrite_output_dir: true
 logging_steps: 10
 logging_first_step: true
@@ -35,11 +35,11 @@ plot_loss: true
 report_to: tensorboard
 
 ### train
-per_device_train_batch_size: 1
-gradient_accumulation_steps: 4
-warmup_ratio: 0.1
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 1
+warmup_ratio: 0.05
 learning_rate: 1e-5
-num_train_epochs: 3.0
+num_train_epochs: 5.0
 lr_scheduler_type: cosine
 ddp_timeout: 180000000
 bf16: true
@@ -50,4 +50,4 @@ enable_liger_kernel: true
 per_device_eval_batch_size: 1
 eval_strategy: steps
 eval_steps: 100
-val_size: 0.1
+val_size: 0.01

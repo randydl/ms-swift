@@ -1,21 +1,37 @@
 import sys
+import importlib
 from omegaconf import OmegaConf
-from llamafactory.train.tuner import run_exp
 
 
 def parse_args():
-    results = []
+    mode, args = '', []
+
     for arg in sys.argv[1:]:
         if not arg.startswith('-') and arg.endswith('.yaml'):
-            content = OmegaConf.load(arg)
-            for key, value in content.items():
-                results.append(f'--{key}={value}')
+            conf = OmegaConf.load(arg)
+            path = conf.pop('dataset_info')
+            info = OmegaConf.load(path)
+            mode = conf.pop('stage')
+
+            for k, v in conf.items():
+                if k == 'dataset':
+                    v = v.split(',')
+                    for i, d in enumerate(v):
+                        name, *rest = d.split('#', 1)
+                        name = info[name]['file_name']
+                        v[i] = '#'.join([name] + rest)
+                    args.append(f'--{k}')
+                    args.extend(v)
+                else:
+                    args.append(f'--{k}={v}')
         else:
-            results.append(arg)
-    return results
+            args.append(arg)
+
+    return mode, args
 
 
 if __name__ == '__main__':
-    args = parse_args()
+    mode, args = parse_args()
     sys.argv = [sys.argv[0]] + args
-    run_exp()
+    module = importlib.import_module('swift.llm')
+    getattr(module, f'{mode}_main')()
