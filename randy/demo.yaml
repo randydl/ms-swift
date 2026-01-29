@@ -12,7 +12,7 @@ attn_impl: flash_attn
 use_liger_kernel: true
 
 ### dataset
-dataset_info: randy/dataset_info.json
+custom_register_path: randy/register.py
 dataset: med_mcqa
 packing: false
 max_length: 2048
