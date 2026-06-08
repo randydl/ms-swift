@@ -16,7 +16,7 @@ cd "$SCRIPT_DIR" || exit 1
 
 pdsh_run "bash $(realpath randy/killer.sh)"
 
-./train.sh randy/llava_8b_3.yaml
-./train.sh randy/llava_14b_3.yaml
+./train2.sh randy/r1_5/llava_4b_2.yaml
+./train2.sh randy/r1_5/llava_4b_3.yaml
 
 pdsh_run "/nas_train/app.e0016372/tools/train.sh"

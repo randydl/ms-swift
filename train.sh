@@ -15,6 +15,10 @@ pdsh_run() {
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 cd "$SCRIPT_DIR" || exit 1
 
+set -a && source .deepspeed_env && set +a
+. "$CONDA_DIR/etc/profile.d/conda.sh"
+conda activate swift
+
 outputs=$(python randy/train.py "$@")
 command=$(echo "$outputs" | awk -F'<randy>|</randy>' '{print $2}')
 command=$(echo "$command" | sed 's| --| \\\n  --|g')
@@ -24,7 +28,7 @@ cat > "$TMP_SCRIPT" << EOF
 #!/bin/bash
 cd "$SCRIPT_DIR" || exit 1
 set -a && source .deepspeed_env && set +a
-. "$WORK_DIR/miniforge3/etc/profile.d/conda.sh"
+. "$CONDA_DIR/etc/profile.d/conda.sh"
 conda activate swift
 EOF
 
