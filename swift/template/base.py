@@ -2015,6 +2015,11 @@ class Template(ProcessorMixin):
             grid_thw = self.concat_tensor(batch, f'{media_type}_grid_thw', 0)
             if grid_thw is not None:
                 res[f'{media_type}_grid_thw'] = grid_thw
+
+        patch_positions = self.concat_tensor(batch, 'patch_positions', 0)
+        if patch_positions is not None:
+            res['patch_positions'] = patch_positions
+
         return res
 
     def _sp_data_collator(self, res, padding_to, tokenizer, padding_side):
@@ -2235,13 +2240,17 @@ class Template(ProcessorMixin):
         pixel_values_videos = inputs.get('pixel_values_videos')
         image_grid_thw = inputs.get('image_grid_thw')
         video_grid_thw = inputs.get('video_grid_thw')
+        patch_positions = inputs.get('patch_positions')
         dtype = visual.dtype
         if pixel_values is None and pixel_values_videos is None:  # plain-text
             images = [Image.new('RGB', (32, 32), (0, 0, 0))]
             media_inputs = processor.image_processor(images=images, return_tensors='pt')
             media_inputs = to_device(media_inputs, input_ids.device)
             pixel_values = media_inputs['pixel_values'].type(dtype)
-            image_embeds = visual(pixel_values, grid_thw=media_inputs['image_grid_thw'])
+            visual_kwargs = {'grid_thw': media_inputs['image_grid_thw']}
+            if patch_positions is not None:
+                visual_kwargs['patch_positions'] = patch_positions
+            image_embeds = visual(pixel_values, **visual_kwargs)
             if hasattr(image_embeds, 'pooler_output'):
                 image_embeds = image_embeds.pooler_output
             inputs_embeds = inputs_embeds + image_embeds.mean().to(device=inputs_embeds.device) * 0.
@@ -2256,7 +2265,10 @@ class Template(ProcessorMixin):
                 pixel_values_mixed = torch.concat([pixel_values, pixel_values_videos], dim=0)
                 grid_thw = torch.concat([image_grid_thw, video_grid_thw], dim=0)
             pixel_values_mixed = pixel_values_mixed.type(dtype)
-            mixed_embeds = visual(pixel_values_mixed, grid_thw=grid_thw)
+            visual_kwargs = {'grid_thw': grid_thw}
+            if patch_positions is not None:
+                visual_kwargs['patch_positions'] = patch_positions
+            mixed_embeds = visual(pixel_values_mixed, **visual_kwargs)
             if hasattr(mixed_embeds, 'pooler_output'):
                 mixed_embeds = mixed_embeds.pooler_output
             if pixel_values is None:

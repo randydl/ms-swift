@@ -453,3 +453,37 @@ register_model(
         requires=['transformers>=4.53.0', 'qwen_vl_utils'],
         tags=['vision'],
     ))
+
+
+class LlavaOnevision2Loader(ModelLoader):
+
+    def get_config(self, model_dir: str) -> PretrainedConfig:
+        config = super().get_config(model_dir)
+        config.vision_start_token_id = 151652
+        return config
+
+    def get_model(self, model_dir: str, *args, **kwargs) -> PreTrainedModel:
+        model_cls = get_class_from_dynamic_module(
+            'modeling_llavaonevision2.LlavaOnevision2ForConditionalGeneration', model_dir)
+        model_cls._no_split_modules = ['OneVisionEncoderEncoderLayer', 'Qwen3DecoderLayer']
+        model = super().get_model(model_dir, *args, **kwargs)
+        patch_get_input_embeddings(model.visual, 'patch_embed')
+        return model
+
+
+register_model(
+    ModelMeta(
+        MLLMModelType.llava_onevision2,
+        [
+            ModelGroup([
+                Model('lmms-lab-encoder/LLaVA-OneVision-2-8B-Instruct',
+                      'lmms-lab-encoder/LLaVA-OneVision-2-8B-Instruct'),
+            ], ),
+        ],
+        LlavaOnevision2Loader,
+        template=TemplateType.llava_onevision2,
+        architectures=['LlavaOnevision2ForConditionalGeneration'],
+        model_arch=ModelArch.llava_onevision2,
+        requires=['transformers>=4.53.0', 'qwen_vl_utils'],
+        tags=['vision', 'video'],
+    ))
