@@ -5,3 +5,4 @@ NCCL_IB_HCA=mlx5_0,mlx5_1,mlx5_2,mlx5_3,mlx5_8,mlx5_9,mlx5_10,mlx5_11
 NCCL_SOCKET_IFNAME=bond0
 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 OMP_NUM_THREADS=1
+CONDA_DIR=/nas_user/app.e0016372/miniforge3

@@ -38,8 +38,8 @@ set_env OMP_NUM_THREADS 1
 set_env SWIFT_CONFIG_FILE "$TMP_SCRIPT"
 
 # COMMAND="python $COMMAND"
-# COMMAND="deepspeed $COMMAND"
-COMMAND="deepspeed --hostfile randy/hostfile $COMMAND"
+COMMAND="deepspeed $COMMAND"
+# COMMAND="deepspeed --hostfile randy/hostfile $COMMAND"
 
 echo "$COMMAND" >> "$TMP_SCRIPT"
 echo "$TMP_SCRIPT" && cat "$TMP_SCRIPT"

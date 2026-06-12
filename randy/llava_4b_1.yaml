@@ -1,13 +1,10 @@
 ### model
 model: /nas_train/app.e0016372/models/lmms-lab/LLaVA-OneVision-1.5-4B
-model_type: llava_onevision1_5
 
 ### method
 # debug: true
 stage: sft
 tuner_type: full
-lora_rank: 16
-lora_alpha: 32
 freeze_vit: true
 freeze_llm: true
 freeze_aligner: false
@@ -19,38 +16,39 @@ vit_gradient_checkpointing: false
 gradient_checkpointing_kwargs: {"use_reentrant": false}
 
 ### dataset
-dataset: llava_pretrain_558k
-packing: false
-max_length: 4096
-max_pixels: 2560000
+cached_dataset:
+  - /nas_user/app.e0016372/datasets/LLaVA-Pretrain/cache2/train
+packing: true
+max_length: 8192
+# max_pixels: 2560000
 dataloader_num_workers: 8
 dataloader_persistent_workers: true
 # split_dataset_ratio: 0.01
 # load_from_cache_file: true
 
 ### output
-output_dir: /nas_train/app.e0016372/train/sft/full/LLaVA-OneVision-1.5-4B
+output_dir: /nas_train/app.e0016372/train/LLaVA-OneVision-1.5-4B
 logging_steps: 10
 save_strategy: steps
 save_steps: 200
-save_total_limit: 2
+save_total_limit: 1
 report_to: tensorboard
-create_checkpoint_symlink: true
 
 ### train
-per_device_train_batch_size: 8
-gradient_accumulation_steps: 4
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+adam_beta1: 0.9
+adam_beta2: 0.99
+adam_epsilon: 1e-5
 weight_decay: 0.0
-warmup_ratio: 0.03
+warmup_ratio: .002
 learning_rate: 1e-4
 num_train_epochs: 1.0
 lr_scheduler_type: cosine_with_min_lr
 lr_scheduler_kwargs: {"min_lr": 1e-6}
 torch_dtype: bfloat16
-deepspeed: zero3
+deepspeed: zero2
 
 ### plugins
 external_plugins:
-  - randy/plugins/model.py
   - randy/plugins/dataset.py
-  - randy/plugins/template.py

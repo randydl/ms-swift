@@ -6,16 +6,14 @@ stage: export
 to_cached_dataset: true
 
 ### dataset
-dataset: bee_training_data_stage1
-max_pixels: 2560000
+dataset: llava_pretrain_558k
+# max_pixels: 2560000
 dataset_num_proc: 128
 # split_dataset_ratio: 0.01
 
 ### output
-output_dir: /nas_user/app.e0016372/datasets/Open-Bee/Bee-Training-Data-Stage1/cache
+output_dir: /nas_user/app.e0016372/datasets/LLaVA-Pretrain/cache2
 
 ### plugins
 external_plugins:
-  - randy/plugins/model.py
   - randy/plugins/dataset.py
-  - randy/plugins/template.py

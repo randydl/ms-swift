@@ -18,9 +18,8 @@ pdsh_run "bash $(realpath randy/killer.sh)"
 
 # ./train.sh randy
 
-./train.sh randy/openbee/llava_4b_1.yaml
-./train.sh randy/openbee/llava_4b_2.yaml
-./train.sh randy/openbee/llava_4b_3.yaml
-./train.sh randy/openbee/llava_4b_4.yaml
+./train.sh randy/llava_4b_1.yaml
+./train.sh randy/r1_5/llava_4b_2.yaml
+./train.sh randy/r1_5/llava_4b_3.yaml
 
 pdsh_run "/nas_train/app.e0016372/tools/train.sh"
