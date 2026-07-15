@@ -1,5 +1,5 @@
 ### model
-model: /nas_train/app.e0016372/train/LLaVA-OneVision-1.5-4B/v1
+model: /nas_train/app.e0016372/train/LLaVA-OneVision-1.5-4B/openbee/v2
 
 ### method
 # debug: true
@@ -17,7 +17,7 @@ gradient_checkpointing_kwargs: {"use_reentrant": false}
 
 ### dataset
 cached_dataset:
-  - /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Instruct-Data/cache/train
+  - /nas_user/app.e0016372/datasets/Open-Bee/Honey-Data-1M/cache/train
 packing: true
 max_length: 16384
 max_pixels: 2560000
@@ -27,22 +27,22 @@ dataloader_persistent_workers: true
 # load_from_cache_file: true
 
 ### output
-output_dir: /nas_train/app.e0016372/train/LLaVA-OneVision-1.5-4B
+output_dir: /nas_train/app.e0016372/train/LLaVA-OneVision-1.5-4B/openbee
 logging_steps: 10
 save_strategy: steps
-save_steps: 1000
+save_steps: 100
 save_total_limit: 1
 report_to: tensorboard
 
 ### train
 per_device_train_batch_size: 1
-gradient_accumulation_steps: 2
-weight_decay: 0.0
+gradient_accumulation_steps: 4
+weight_decay: 0.01
 warmup_ratio: 0.03
-learning_rate: 1e-5
+learning_rate: 3e-5
 num_train_epochs: 1
 lr_scheduler_type: cosine_with_min_lr
-lr_scheduler_kwargs: {"min_lr": 1e-6}
+lr_scheduler_kwargs: {"min_lr": 5e-6}
 torch_dtype: bfloat16
 deepspeed: zero2
 

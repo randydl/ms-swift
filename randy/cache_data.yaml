@@ -1,22 +1,19 @@
 ### model
 model: /nas_train/app.e0016372/models/lmms-lab/LLaVA-OneVision-1.5-4B
-model_type: llava_onevision1_5
 
 ### method
 stage: export
 to_cached_dataset: true
 
 ### dataset
-dataset: llava_onevision_1_5_instruct_22m
+dataset: mobile_o_pre_train
 max_pixels: 2560000
 dataset_num_proc: 128
 # split_dataset_ratio: 0.01
 
 ### output
-output_dir: /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Instruct-Data/cache
+output_dir: /nas_user/app.e0016372/datasets/BLIP3o/Mobile-O-Pre-Train/cache
 
 ### plugins
 external_plugins:
-  - randy/plugins/model.py
   - randy/plugins/dataset.py
-  - randy/plugins/template.py
