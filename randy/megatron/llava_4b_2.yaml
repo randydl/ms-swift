@@ -23,10 +23,11 @@ cached_dataset:
   - /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/cache/laioncn/train
   - /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/cache/mint/train
   - /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/cache/obelics/train
+  - /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/cache/sa1b/train
   - /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/cache/omniscience/train
-  - /nas_user/app.e0016372/datasets/Open-Bee/Bee-Training-Data-Stage2/cache/train
-  - /nas_user/app.e0016372/datasets/BLIP3o/BLIP3o-Pretrain-Long-Caption/cache/train
-  - /nas_user/app.e0016372/datasets/BLIP3o/Mobile-O-Pre-Train/cache/train
+  # - /nas_user/app.e0016372/datasets/Open-Bee/Bee-Training-Data-Stage2/cache/train
+  # - /nas_user/app.e0016372/datasets/BLIP3o/BLIP3o-Pretrain-Long-Caption/cache/train
+  # - /nas_user/app.e0016372/datasets/BLIP3o/Mobile-O-Pre-Train/cache/train
 packing: true
 max_length: 8192
 max_pixels: 2560000

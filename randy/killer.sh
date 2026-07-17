@@ -18,4 +18,4 @@ nvidia-smi --query-compute-apps=pid --format=csv,noheader | sort -u | while read
     fi
 done
 
-# fkill 'swift/cli/_megatron/sft.py'
+fkill 'swift/cli/_megatron/sft.py'

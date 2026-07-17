@@ -32,6 +32,10 @@
     "dataset_path": "/nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/obelics/merged_all.jsonl"
   },
   {
+    "dataset_name": "llava_onevision_1_5_mid_training_sa1b",
+    "dataset_path": "/nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/sa1b/merged_all.jsonl"
+  },
+  {
     "dataset_name": "omniscience",
     "dataset_path": "/nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/omniscience/merged_all.jsonl"
   },

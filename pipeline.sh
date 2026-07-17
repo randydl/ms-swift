@@ -17,8 +17,10 @@ cd "$SCRIPT_DIR" || exit 1
 pdsh_run "bash $(realpath randy/killer.sh)"
 
 # ./train.sh randy
+# ./train2.sh randy
 
-./train.sh randy/cache_data.yaml
-./train.sh randy/cache_data2.yaml
+./train2.sh randy/megatron/llava_4b_1.yaml
+./train2.sh randy/megatron/llava_4b_2.yaml
+./train2.sh randy/megatron/llava_4b_3.yaml
 
 pdsh_run "/nas_train/app.e0016372/tools/train.sh"

@@ -11,13 +11,14 @@ from multiprocessing import Pool, cpu_count
 
 
 DATA_ROOTS = [
-    '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/coyo',
-    '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/datacomp1b',
-    '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/imagenet',
-    '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/laioncn',
-    '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/mint',
-    '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/obelics',
-    '/nas_train/app.e0016372/datasets/OmniScience/omniscience',
+    # '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/coyo',
+    # '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/datacomp1b',
+    # '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/imagenet',
+    # '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/laioncn',
+    # '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/mint',
+    # '/nas_train/app.e0031982/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/obelics',
+    '/nas_train/app.e0016372/datasets/mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M/sa1b',
+    # '/nas_train/app.e0016372/datasets/OmniScience/omniscience',
 ]
 
 OUTPUT_ROOT = Path('/nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M')
@@ -78,10 +79,10 @@ def process_parquet(args):
 
 
 def main():
-    shutil.rmtree(OUTPUT_ROOT, ignore_errors=True)
-    OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
+    # shutil.rmtree(OUTPUT_ROOT, ignore_errors=True)
+    # OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
 
-    logger.remove()
+    # logger.remove()
     logger.add(ERROR_LOG, level='ERROR', enqueue=True)
 
     tasks = []
