@@ -31,15 +31,15 @@ cat > "$TMP_SCRIPT" << EOF
 cd "$SCRIPT_DIR" || exit 1
 set -a && source .deepspeed_env && set +a
 . "$CONDA_DIR/etc/profile.d/conda.sh"
-conda activate swift
+conda activate swift2
 EOF
 
 set_env OMP_NUM_THREADS 1
 set_env SWIFT_CONFIG_FILE "$TMP_SCRIPT"
 
-# COMMAND="python $COMMAND"
+COMMAND="python $COMMAND"
 # COMMAND="deepspeed $COMMAND"
-COMMAND="deepspeed --hostfile randy/hostfile $COMMAND"
+# COMMAND="deepspeed --hostfile randy/hostfile $COMMAND"
 
 echo "$COMMAND" >> "$TMP_SCRIPT"
 echo "$TMP_SCRIPT" && cat "$TMP_SCRIPT"

@@ -6,13 +6,13 @@ stage: export
 to_cached_dataset: true
 
 ### dataset
-dataset: mobile_o_pre_train
+dataset: llava_onevision_1_5_mid_training_sa1b
 max_pixels: 2560000
 dataset_num_proc: 128
 # split_dataset_ratio: 0.01
 
 ### output
-output_dir: /nas_user/app.e0016372/datasets/BLIP3o/Mobile-O-Pre-Train/cache
+output_dir: /nas_user/app.e0016372/datasets/LLaVA-OneVision-1.5-Mid-Training-85M/cache/sa1b
 
 ### plugins
 external_plugins:

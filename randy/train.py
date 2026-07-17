@@ -33,6 +33,8 @@ def parse_config():
                 if key == 'output_dir' and debug_mode:
                     value = Path(value).with_name('temp')
                     shutil.rmtree(value, ignore_errors=True)
+                if key == 'save_steps' and value < 0:
+                    value = int(1e9)
                 result.append(f'--{key}')
                 if isinstance(value, dict):
                     result.append(f"'{json.dumps(value, ensure_ascii=False)}'")
